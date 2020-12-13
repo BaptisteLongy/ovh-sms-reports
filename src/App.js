@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      {lastestTag && lastestTag !== process.env.REACT_APP_VERSION ? <p>Il y a une nouvelle version, fais un git pull !</p> : null}
+      {lastestTag && lastestTag !== process.env.REACT_APP_VERSION ? <p>Il y a une nouvelle version, fais la MAJ !</p> : null}
       <SmsConsumptionReport />
     </div>
   );

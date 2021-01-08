@@ -22,7 +22,6 @@ function Criteria(props) {
     const [startingDate, setStartingDate] = useState(new Date());
     const [endingDate, setEndingDate] = useState(new Date());
     const [job, setJob] = useState('');
-    const [selectedSenders, setSelectedSenders] = useState([]);
 
     useEffect(() => {
         if (isValidDate(startingDate)) {
@@ -44,13 +43,9 @@ function Criteria(props) {
         }
     }, [props, endingDate])
 
-    useEffect(() => {
-        setSelectedSenders([])
-    }, [props])
-
     const handleJobChange = (e) => {
         setJob(e.target.value)
-        props.handleJobChange(e.target.value)
+        props.handleJobChange && props.handleJobChange(e.target.value)
     }
 
     return (
@@ -75,9 +70,9 @@ function Criteria(props) {
                 {(props && props.senderList) ?
                     <Grid item xs={3}>
                         <Autocomplete
-                            value={selectedSenders}
+                            value={props.selectedSenders}
                             onChange={(event, newSenders) => {
-                                setSelectedSenders(newSenders);
+                                props.handleSendersChange(newSenders);
                             }}
                             multiple
                             options={props.senderList}

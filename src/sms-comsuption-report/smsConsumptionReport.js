@@ -96,7 +96,7 @@ function SmsConsumptionReport() {
                     </Box>
                     : <p>Loading</p>
                 }
-                <ReportDetails smsListDetails={smsListDetails} />
+                <ReportDetails smsListDetails={smsListDetails.filter(sms => {return selectedSenders.includes(sms.sender)})} />
             </LocalizationProvider>
         </React.Fragment>
     )

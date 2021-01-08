@@ -6,6 +6,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Autocomplete from '@material-ui/core/Autocomplete';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function isValidDate(d) {
     return d instanceof Date && !isNaN(d);
@@ -60,6 +67,30 @@ function Criteria(props) {
                         </Select>
                     </FormControl>
                 </Grid>
+                {(props && props.senderList) ?
+                    <Grid item xs={3}>
+                        <Autocomplete
+                            multiple
+                            options={props.senderList}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) => option}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option}
+                                </li>
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params} variant="outlined" label="Senders" />
+                            )}
+                        />
+                    </Grid>
+                    : null}
                 <Grid item>
                     <DatePicker
                         renderInput={(props) => <TextField {...props} helperText="jj/mm/aaaa" />}

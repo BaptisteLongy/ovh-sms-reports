@@ -16,6 +16,7 @@ function SmsConsumptionReport() {
     const [endingDate, setEndingDate] = useState();
     const [smsListDetails, setSmsListDetails] = useState([]);
     const [loadingReport, setLoadingReport] = useState(false);
+    const [senderList, setSenderList] = useState();
 
     useEffect(() => {
         ovh.request('GET', '/sms', function (err, jobList) {
@@ -60,12 +61,23 @@ function SmsConsumptionReport() {
         }
     }
 
+    const handleJobChange = (theNewJob) => {
+        setSmsJob(theNewJob)
+        updateSenderList(theNewJob)
+    }
+
+    const updateSenderList = (job) => {
+        ovh.request('GET', '/sms/' + job + '/senders', function (err, senderList) {
+            setSenderList(senderList);
+        });
+    }
+
     return (
         <React.Fragment>
             <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
                 {smsJobList ?
                     <Box sx={{ marginTop: '1em', marginBottom: '1em', padding: '12px' }}>
-                        <Criteria handleStartingDateChange={setStartingDate} handleEndingDateChange={setEndingDate} jobList={smsJobList} handleJobChange={setSmsJob} />
+                        <Criteria handleStartingDateChange={setStartingDate} handleEndingDateChange={setEndingDate} jobList={smsJobList} handleJobChange={handleJobChange} senderList={senderList}/>
                         <Box sx={{ marginTop: '1em' }}>
                             <LoadingButton onClick={handleReportClick} pending={loadingReport} variant="contained">
                                 Rapport

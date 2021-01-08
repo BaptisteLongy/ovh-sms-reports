@@ -22,6 +22,7 @@ function Criteria(props) {
     const [startingDate, setStartingDate] = useState(new Date());
     const [endingDate, setEndingDate] = useState(new Date());
     const [job, setJob] = useState('');
+    const [selectedSenders, setSelectedSenders] = useState([]);
 
     useEffect(() => {
         if (isValidDate(startingDate)) {
@@ -42,6 +43,10 @@ function Criteria(props) {
             props.handleEndingDateChange("")
         }
     }, [props, endingDate])
+
+    useEffect(() => {
+        setSelectedSenders([])
+    }, [props])
 
     const handleJobChange = (e) => {
         setJob(e.target.value)
@@ -70,6 +75,10 @@ function Criteria(props) {
                 {(props && props.senderList) ?
                     <Grid item xs={3}>
                         <Autocomplete
+                            value={selectedSenders}
+                            onChange={(event, newSenders) => {
+                                setSelectedSenders(newSenders);
+                            }}
                             multiple
                             options={props.senderList}
                             disableCloseOnSelect

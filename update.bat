@@ -1,4 +1,4 @@
 git pull
-call npm install
+call npm ci
 call npm run build
 pause

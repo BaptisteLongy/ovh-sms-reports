@@ -1,2 +1,1 @@
-call npm i -g serve
-serve -s build
+call npx serve -s build
